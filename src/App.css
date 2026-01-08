@@ -1,53 +1,71 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f2f2f2;
+* {
+  box-sizing: border-box;
 }
 
-.app {
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #ffe4f0;
 }
 
 .container {
-  background: white;
-  padding: 20px;
-  width: 350px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-h1 {
+  min-height: 100vh;
+  padding: 40px;
   text-align: center;
 }
 
-.todo-form {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
+h1 {
+  color: #d63384;
 }
 
-.todo-form input {
-  flex: 1;
-  padding: 8px;
+.search-box {
+  margin: 25px 0;
 }
 
-.todo-form button {
-  padding: 8px 12px;
+.search-box input {
+  padding: 12px;
+  width: 260px;
+  border-radius: 8px;
+  border: 2px solid #ff69b4;
+  outline: none;
 }
 
-.todo-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
+.search-box button {
+  padding: 12px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #ff69b4;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.todo-item button {
-  margin-left: auto;
+.loading {
+  margin-top: 20px;
+  color: #d63384;
 }
 
-.done {
-  text-decoration: line-through;
-  color: gray;
+.grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 25px;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 15px;
+  box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.card h3 {
+  margin: 10px 0 5px;
+  color: #d63384;
 }

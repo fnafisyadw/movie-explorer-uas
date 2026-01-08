@@ -2,48 +2,60 @@ import { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const searchMovie = async () => {
+  const fetchMovies = async (query) => {
     if (!query) return;
 
-    const res = await fetch(
-      `https://www.omdbapi.com/?apikey=564727fa&s=${query}`
-    );
-    const data = await res.json();
-
-    if (data.Search) {
-      setMovies(data.Search);
-    } else {
-      setMovies([]);
+    setLoading(true);
+    try {
+      const res = await fetch(
+        `https://api.tvmaze.com/search/shows?q=${encodeURIComponent(query)}`
+      );
+      const data = await res.json();
+      setMovies(data);
+    } catch (error) {
+      console.log("Error fetch data");
     }
+    setLoading(false);
   };
 
   useEffect(() => {
-    document.title = "Movie Explorer App";
+    fetchMovies("barbie");
   }, []);
 
   return (
     <div className="container">
-      <h1>🎬 Movie Explorer</h1>
+      <h1>💖 Barbie Movie Explorer 💖</h1>
 
       <div className="search-box">
         <input
           type="text"
-          placeholder="Cari film..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Cari film / series..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && fetchMovies(search)}
         />
-        <button onClick={searchMovie}>Cari</button>
+        <button onClick={() => fetchMovies(search)}>Cari</button>
       </div>
 
-      <div className="movie-grid">
-        {movies.map((movie) => (
-          <div key={movie.imdbID} className="card">
-            <img src={movie.Poster} alt={movie.Title} />
-            <h3>{movie.Title}</h3>
-            <p>{movie.Year}</p>
+      {loading && <p className="loading">Loading yaa... ✨</p>}
+
+      <div className="grid">
+        {movies.map((item) => (
+          <div className="card" key={item.show.id}>
+            <img
+              src={
+                item.show.image
+                  ? item.show.image.medium
+                  : "https://via.placeholder.com/210x295?text=No+Image"
+              }
+              alt={item.show.name}
+            />
+            <h3>{item.show.name}</h3>
+            <p>{item.show.premiered}</p>
           </div>
         ))}
       </div>
